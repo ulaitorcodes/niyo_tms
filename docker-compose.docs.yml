@@ -1,0 +1,16 @@
+services:
+  docs:
+    image: niyo_tms_local_docs
+    container_name: niyo_tms_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./niyo_tms:/app/niyo_tms:z
+    ports:
+      - '9000:9000'
+    command: /start-docs

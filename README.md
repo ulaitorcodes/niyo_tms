@@ -6,31 +6,37 @@ Overview
 
 The Task Management System is a web application built with Django, Django REST Framework (DRF), Redis, Celery, PostgreSQL, and Django Channels. It allows users to manage projects, sprints, and tasks with real-time updates using WebSockets. The application uses JWT for authentication.
 
+## API Docs
+- **Docs** http://localhost:8000/api/docs/#/v1
 
-Features
+## Features
 
-Projects: Create and manage projects, assign members, and track project details.
+- **Projects:** Create and manage projects, assign members, and track project details.
+- **Sprints:** Define sprints within projects, with start and end dates.
+- **Tasks:** Create tasks within sprints, assign them to project members, and track their status.
+- **Real-time updates:** Receive real-time updates for task changes using WebSockets.
+- **User Authentication:** Secure access to the application with JWT-based authentication.
 
-Sprints: Define sprints within projects, with start and end dates.
+## Technologies Used
 
-Tasks: Create tasks within sprints, assign them to project members, and track their status.
+- **Backend:** Django, Django REST Framework, Django Channels
+- **Database:** PostgreSQL
+- **Task Queue:** Celery with Redis as a message broker
+- **Real-time:** Django Channels with Redis
+- **Containerization:** Docker and Docker Compose
 
-Real-time updates: Receive real-time updates for task changes using WebSockets.
+## Setup and Installation
 
-User Authentication: Secure access to the application with JWT-based authentication.
+### Prerequisites
 
+- Docker and Docker Compose
 
-Technologies Used:
+### Installation Steps
 
-Backend: Django, Django REST Framework, Django Channels
-
-Database: PostgreSQL
-
-Task Queue: Celery with Redis as a message broker
-
-Real-time: Django Channels with Redis
-
-Containerization: Docker and Docker Compose
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/task-management-system.git
+   cd task-management-system
 
 
 # Setup and Installation
@@ -98,6 +104,6 @@ export COMPOSE_FILE=docker-compose.local.yml
 # Execute Management Commands
 As with any shell command that we wish to run in our container, this is done using the docker compose -f docker-compose.local.yml run --rm command:
 
-$ docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
+- docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
 
-$ docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser
+- docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser

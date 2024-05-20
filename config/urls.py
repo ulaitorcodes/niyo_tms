@@ -13,23 +13,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from niyo_tms.users.api.views import RegisterView
-from niyo_tms.app.views import ProjectViewSet
-
-
 from django.urls import path, include
-from rest_framework import routers
 
-# Import your viewsets
-# from users.views import UserViewSet
-from niyo_tms.app.views import ProjectViewSet
-from niyo_tms.app.views import SprintViewSet
-from niyo_tms.app.views import TaskViewSet
-
-# router = routers.DefaultRouter()
-# # router.register('users', UserViewSet, basename='user')
-# router.register(r'projects', ProjectViewSet)
-# router.register('sprints', SprintViewSet)
-# router.register('tasks', TaskViewSet)
 
 urlpatterns = [
    

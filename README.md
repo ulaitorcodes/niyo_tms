@@ -27,16 +27,15 @@ The Task Management System is a web application built with Django, Django REST F
 
 ## Setup and Installation
 
+# Clone the Repository
+
+git clone https://github.com/ulaitorcodes/niyo_tms.git
+
 ### Prerequisites
 
 - Docker and Docker Compose
 
 ### Installation Steps
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/task-management-system.git
-   cd task-management-system
 
 
 # Setup and Installation
@@ -46,9 +45,6 @@ Docker and Docker Compose
 
 # Installation Steps
 
-# Clone the Repository
-
-git clone https://github.com/ulaitorcodes/niyo_tms.git
 cd niyo_tms
 
 

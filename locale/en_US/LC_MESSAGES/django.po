@@ -1,5 +1,5 @@
 # Translations for the niyo_tms project
-# Copyright (C) 2024 ulaitor
+# Copyright (C) 2024 elijah ulaitor
 # ulaitor <ulaitor@niyo.com>, 2024.
 #
 #, fuzzy

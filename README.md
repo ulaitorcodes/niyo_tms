@@ -2,97 +2,102 @@
 
 Niyo Task Management system
 
-[![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+Overview
 
-License: MIT
+The Task Management System is a web application built with Django, Django REST Framework (DRF), Redis, Celery, PostgreSQL, and Django Channels. It allows users to manage projects, sprints, and tasks with real-time updates using WebSockets. The application uses JWT for authentication.
 
-## Settings
 
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+Features
 
-## Basic Commands
+Projects: Create and manage projects, assign members, and track project details.
 
-### Setting Up Your Users
+Sprints: Define sprints within projects, with start and end dates.
 
-- To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
+Tasks: Create tasks within sprints, assign them to project members, and track their status.
 
-- To create a **superuser account**, use this command:
+Real-time updates: Receive real-time updates for task changes using WebSockets.
 
-      $ python manage.py createsuperuser
+User Authentication: Secure access to the application with JWT-based authentication.
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-### Type checks
+Technologies Used:
 
-Running type checks with mypy:
+Backend: Django, Django REST Framework, Django Channels
 
-    $ mypy niyo_tms
+Database: PostgreSQL
 
-### Test coverage
+Task Queue: Celery with Redis as a message broker
 
-To run the tests, check your test coverage, and generate an HTML coverage report:
+Real-time: Django Channels with Redis
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+Containerization: Docker and Docker Compose
 
-#### Running tests with pytest
 
-    $ pytest
+# Setup and Installation
 
-### Live reloading and Sass CSS compilation
+Prerequisites
+Docker and Docker Compose
 
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
+# Installation Steps
 
-### Celery
+# Clone the Repository
 
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
+git clone https://github.com/ulaitorcodes/niyo_tms.git
 cd niyo_tms
-celery -A config.celery_app worker -l info
-```
 
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
 
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
+POSTGRES_DB=your_db_name
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
 
-```bash
-cd niyo_tms
-celery -A config.celery_app beat
-```
+REDIS_URL=redis://redis:6379/0
 
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
 
-```bash
-cd niyo_tms
-celery -A config.celery_app worker -B -l info
-```
+DJANGO_SECRET_KEY=your_secret_key
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 
-### Email Server
+JWT_SECRET_KEY=your_jwt_secret_key
 
-In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [Mailpit](https://github.com/axllent/mailpit) with a web interface is available as docker container.
 
-Container mailpit will start automatically when you will run all docker containers.
-Please check [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html) for more details how to start all containers.
+# Environment Variables
 
-With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
+Create a .env file in the project root with the following variables:
+POSTGRES_DB=your_db_name
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
 
-### Sentry
+REDIS_URL=redis://redis:6379/0
 
-Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
-The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
 
-You must set the DSN url in production.
+DJANGO_SECRET_KEY=your_secret_key
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 
-## Deployment
+JWT_SECRET_KEY=your_jwt_secret_key
 
-The following details how to deploy this application.
 
-### Docker
+# Build and Start Docker Containers
 
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
-# niyo_tms
+docker-compose -f docker-compose.local.yml build
+docker-compose -f docker-compose.local.yml up
+
+
+# Export Docker Compose File for Future Commands
+
+export COMPOSE_FILE=docker-compose.local.yml
+
+# Execute Management Commands
+As with any shell command that we wish to run in our container, this is done using the docker compose -f docker-compose.local.yml run --rm command:
+
+$ docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
+
+$ docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser

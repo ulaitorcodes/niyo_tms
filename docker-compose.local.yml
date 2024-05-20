@@ -1,3 +1,5 @@
+version: '3.8'
+
 volumes:
   niyo_tms_local_postgres_data: {}
   niyo_tms_local_postgres_data_backups: {}
@@ -44,10 +46,8 @@ services:
   redis:
     image: docker.io/redis:6
     container_name: niyo_tms_local_redis
-    
     volumes:
       - niyo_tms_local_redis_data:/data
-    
 
   celeryworker:
     <<: *django

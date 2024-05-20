@@ -10,22 +10,43 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from niyo_tms.users.api.views import RegisterView
+from niyo_tms.app.views import ProjectViewSet
+
+
+from django.urls import path, include
+from rest_framework import routers
+
+# Import your viewsets
+# from users.views import UserViewSet
+from niyo_tms.app.views import ProjectViewSet
+from niyo_tms.app.views import SprintViewSet
+from niyo_tms.app.views import TaskViewSet
+
+# router = routers.DefaultRouter()
+# # router.register('users', UserViewSet, basename='user')
+# router.register(r'projects', ProjectViewSet)
+# router.register('sprints', SprintViewSet)
+# router.register('tasks', TaskViewSet)
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
-        name="about",
-    ),
+   
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("niyo_tms.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
-    # ...
-    # Media files
+    path("api/v1/app/", include("niyo_tms.app.urls",)),
+    # path('api/v1/', include(router.urls)),
+
+
+    path('api/v1/users/register/', RegisterView.as_view(), name='user_create'),
+    path('api/v1/users/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    
+ 
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
 if settings.DEBUG:
@@ -35,9 +56,7 @@ if settings.DEBUG:
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
-    # DRF auth token
-    path("api/auth-token/", obtain_auth_token),
+ 
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
         "api/docs/",

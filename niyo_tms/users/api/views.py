@@ -5,10 +5,24 @@ from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import AllowAny
+# from niyo_tms.users.models import User
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import UserRegistrationSerializer
 
-from niyo_tms.users.models import User
+User = get_user_model()
 
 from .serializers import UserSerializer
+
+from rest_framework import generics
+
 
 
 class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
@@ -24,3 +38,13 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     def me(self, request):
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+    
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'User registered successfully'}, status=201)
+        return Response(serializer.errors, status=400)

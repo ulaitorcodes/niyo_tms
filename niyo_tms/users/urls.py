@@ -1,12 +1,12 @@
 from django.urls import path
-
-from .views import user_detail_view
-from .views import user_redirect_view
-from .views import user_update_view
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from niyo_tms.users.api.views import RegisterView
 
 app_name = "users"
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<int:pk>/", view=user_detail_view, name="detail"),
+   
+    # path('register/', RegisterView.as_view(), name='user_create'),
+    
 ]

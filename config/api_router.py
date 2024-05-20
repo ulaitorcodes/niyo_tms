@@ -4,6 +4,7 @@ from rest_framework.routers import SimpleRouter
 
 from niyo_tms.users.api.views import UserViewSet
 
+
 router = DefaultRouter() if settings.DEBUG else SimpleRouter()
 
 router.register("users", UserViewSet)
